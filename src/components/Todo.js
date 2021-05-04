@@ -63,6 +63,9 @@ class Todo extends React.Component {
           <button className="btn" type="submit">Add</button>
         </form>
         <ul>{todoLists}</ul>
+        <p className="footer">
+            @ Developed by <span style={{ color: "red" }}>❤</span>Ayush
+          </p>
         </div>
     </>
     );
