@@ -42,3 +42,7 @@ input, input[type='text']{
     justify-content: center;
     align-items: center;
 }
+.footer {
+    font-family: cursive;
+    color: gray;
+}
