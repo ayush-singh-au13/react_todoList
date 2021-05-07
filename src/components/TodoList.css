@@ -1,5 +1,11 @@
 .todolist {
-    border: 3px solid green;
+
+    border: 3px solid rgb(89, 240, 89);
     background-color: #fff !important;
     padding: 0.25rem 1.25rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: 0.8s;
 }
