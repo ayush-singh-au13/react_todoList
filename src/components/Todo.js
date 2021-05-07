@@ -1,75 +1,80 @@
-import React from "react";
-import TodoList from './TodoList';
-import './Todo.css';
-
-class Todo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          todo: "",
-          todos: [],
-        };
-    }
+import React, { useState } from "react";
 
 
-  submit = (e) => {
+import TodoList from "./TodoList";
+import "./Todo.css";
+
+const TodoFunc = () => {
+  const [state, setState] = useState({
+    todo: "",
+    todos: [],
+  });
+
+  const submit = (e) => {
     e.preventDefault();
-    // this.setState(previousState => {
-    //     return {
-    //   todos: [...previousState.todos, previousState.todo],
-    //   todo: ''
-    //     };
-    // });
-    this.setState({
-        todos: [
-            ...this.state.todos,
-            
-                this.state.todo
-            
-        ] ,
-        todo : ''
-    })
+    setState({
+      todos: [...state.todos, state.todo],
+        todo: "",
+    });
   };
 
-  onChangeHandler = (e) => {
+  const onChangeHandler = (e) => {
     e.preventDefault();
-    this.setState({
+    setState({
+      ...state,
       [e.target.name]: e.target.value,
     });
   };
 
+  const clickHandler = (name) => {
+        let newTodo = state.todos.filter((v) => v !== name)
+        setState({
+          ...state,
+          todos: newTodo
+        });
 
-  render() {
+     console.log(newTodo);   
+
+  }
+
+  let todoLists = {};
+  const renderingTodo = () => {
+    return state.todos.map((v,i) => {
       
-    let todoLists = this.state.todos.map((v,i) => {
-        return (
-        <TodoList
-        key={i} 
-        value={v}/> 
-        )
+      todoLists = <div  key={i} className="remove_list">
+                    <TodoList  value={v}  />
+                    
+                    <button type="button" className="btn-primary" onClick={() => clickHandler(v)}>Remove</button>
+                  </div>;
+      return todoLists;
     });
-    return (
-      <>
+  };
+  // console.log(todoLists);
+  
+  return (
+    <>
       <div className="list">
-      <h1>To Do Lists</h1>
-        <form onSubmit={this.submit}>
+        <h1>To Do Lists</h1>
+        <form onSubmit={submit}>
           <input
             type="text"
             name="todo"
             placeholder="Add todo items"
-            value={this.state.todo}
-            onChange={this.onChangeHandler}
+            value={state.todo}
+            onChange={onChangeHandler}
           />
-          <button className="btn" type="submit">Add</button>
+          <button className="btn" type="submit">
+            Add
+          </button>
         </form>
-        <ul>{todoLists}</ul>
-        <p className="footer">
-            @ Developed by <span style={{ color: "red" }}>❤</span>Ayush
-          </p>
-        </div>
-    </>
-    );
-  }
-}
+        <ul>
+          {renderingTodo()}
+        </ul>
 
-export default Todo;
+        {/* <ul>{todoLists}</ul> */}
+      </div>
+    </>
+  );
+};
+
+export default TodoFunc;
